@@ -18,7 +18,7 @@
                 :key="index"
                 :class="type.cssClass"
                 :title="type.name"
-                @click="snapshot(type)"
+                @click="snapshot(type, $event)"
             >
                 {{ type.name }}
             </li>
@@ -102,13 +102,11 @@ export default {
         hideMenu() {
             this.showMenu = false;
         },
-        snapshot(notebook) {
+        snapshot(notebook, event) {
             this.hideMenu();
 
             this.$nextTick(() => {
-                const element = document.querySelector('.c-overlay__contents')
-                    || document.getElementsByClassName('l-shell__main-container')[0];
-
+                const element = event.target.closest('.js-snapshot-frame');
                 const bounds = this.openmct.time.bounds();
                 const link = !this.ignoreLink
                     ? window.location.href
